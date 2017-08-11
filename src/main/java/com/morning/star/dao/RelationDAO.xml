@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morning.star.dao.RelationDAO">
+    <resultMap id="TohomeMap" type="com.morning.star.bean.RelationBean">
+        <result column="tohome_field" property="tohomeField"/>
+        <result column="hy_filed" property="hyField"/>
+        <result column="output_table_name" property="tohomeTable"/>
+        <result column="input_table_name" property="hyTable"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="TohomeMap">
+        use `tohome`;
+        SELECT * FROM tohome.t_relation
+        <if test="name != null">
+            WHERE output_table_name = #{name}
+        </if>
+    </select>
+
+</mapper>

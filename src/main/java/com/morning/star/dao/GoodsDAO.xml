@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morning.star.dao.GoodsDAO">
+    <resultMap id="TohomeMap" type="com.morning.star.bean.RetailGoods">
+        <result property="goodsCode" column="itemCode"/>
+        <result property="goodsName" column="title"/>
+        <result property="upcCode" column="upc"/>
+        <result property="unitsId" column="unitsId"/>
+        <result property="unitsName" column="unitsName"/>
+        <result property="goodsType" column="type"/>
+        <result property="guidePrice" column="marketPrice"/>
+        <result property="salePrice" column="price"/>
+        <result property="brandId" column="brandId"/>
+        <result property="brandName" column="brandName"/>
+        <result property="weight" column="realWeight"/>
+        <result property="categoryId1" column="cate1"/>
+        <result property="categoryId2" column="cate2"/>
+        <result property="categoryId3" column="cate3"/>
+        <result property="iconPath" column="mainUri"/>
+        <result property="modifyTime" column="updateTime"/>
+        <result property="operatorName" column="operator"/>
+    </resultMap>
+
+    <select id="selectAll" resultType="com.morning.star.bean.RetailGoods">
+        SELECT
+        <foreach collection="list" item="item" separator=",">
+            <if test="item.tohomeField != null">
+                ${item.tohomeField} as ${item.hyField}
+            </if>
+        </foreach>
+        FROM tohome.th_item
+    </select>
+
+    <select id="getInfo" resultType="com.morning.star.bean.RetailGoods">
+        SELECT
+        <foreach collection="list" item="item" separator=",">
+            <if test="item.tohomeField != null">
+                ${item.tohomeField} as ${item.hyField}
+            </if>
+        </foreach>
+        FROM tohome.th_item where itemCode = #{goodsCode}
+    </select>
+
+    <insert id="addGoods" useGeneratedKeys="true" keyProperty="id">
+        use `retail_base_info`;
+        insert into retail_goods (id, goods_code, goods_name,
+        company_code, spu_code, upc_code,
+        is_serial_code, units_id, units_name,
+        goods_type, pack_spec_num, pack_spec_units,
+        unit_goods_code, status, sale_status,
+        cost_price, guide_price, sale_price, brand_id,
+        brand_name, standard_type, weight, goods_introduce,
+        category_id1, category_id2, category_id3,
+        priority,
+        tag_ids, custom_attrs, shelf_life, icon_path,
+        create_time, modify_time,
+        operator_id, operator_name)
+        values (#{id,jdbcType=INTEGER}, #{goodsCode,jdbcType=VARCHAR},
+        #{goodsName,jdbcType=VARCHAR},
+        #{companyCode,jdbcType=VARCHAR}, #{spuCode,jdbcType=VARCHAR}, #{upcCode,jdbcType=VARCHAR},
+        #{isSerialCode,jdbcType=INTEGER}, #{unitsId,jdbcType=INTEGER},
+        #{unitsName,jdbcType=VARCHAR},
+        #{goodsType,jdbcType=VARCHAR}, #{packSpecNum,jdbcType=INTEGER}, #{packSpecUnits,jdbcType=VARCHAR},
+        #{unitGoodsCode,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+        #{saleStatus,jdbcType=INTEGER},
+        #{costPrice,jdbcType=DECIMAL},#{guidePrice,jdbcType=DECIMAL}, #{salePrice,jdbcType=DECIMAL}, #{brandId,jdbcType=INTEGER},
+        #{brandName,jdbcType=VARCHAR}, #{standardType,jdbcType=INTEGER}, #{weight,jdbcType=VARCHAR},
+        #{goodsIntroduce,jdbcType=VARCHAR},
+        #{categoryId1,jdbcType=BIGINT}, #{categoryId2,jdbcType=BIGINT}, #{categoryId3,jdbcType=BIGINT},
+        #{priority},
+        #{tagIds,jdbcType=VARCHAR}, #{customAttrs,jdbcType=VARCHAR},
+        #{shelfLife,jdbcType=INTEGER},#{iconPath,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{operatorId,jdbcType=INTEGER}, #{operatorName,jdbcType=VARCHAR})
+    </insert>
+
+</mapper>

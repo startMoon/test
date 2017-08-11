@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morning.star.dao.StoreDAO">
+    <resultMap id="TohomeMap" type="com.morning.star.bean.TohomeStore">
+        <id property="storeCode" column="storeId"/>
+        <result property="storeName" column="fullName"/>
+        <result property="tel" column="telephone"/>
+        <result property="longitude" column="gpsEw"/>
+        <result property="latitude" column="gpsNs"/>
+        <result property="address" column="address"/>
+        <result property="openTime" column="openTimeStart"/>
+        <result property="closeTime" column="openTimeEnd"/>
+        <result property="status" column="storeState"/>
+        <result property="payType" column="paymentType"/>
+        <result property="deliverType" column="deliveryType"/>
+        <result property="deliverRange" column="serviceArea"/>
+        <result property="postageConfig" column="deliveryInfo"/>
+        <result property="createTime" column="createTime"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="TohomeMap">
+        use `tohome`;
+        SELECT * FROM tohome.th_store
+    </select>
+
+    <insert id="addStore" parameterType="com.morning.star.bean.RetailStore">
+        use `retail_base_info`;
+        insert into
+        retail_store
+        (store_code,store_name,company_code,manager,email,mobile,qq,level,model,stock_model,max_pos_num,tel,longitude,latitude,address,province_id,city_id,county_id,open_time,close_time,status,is_free,pay_type,deliver_type,deliver_range,postage_config,free_postage_order_fee,postage_fee,instant_service,order_end_time,nextday_service,customer_service,create_time,operator_id,operator_name,remark)
+        values
+        (#{storeCode},#{storeName},#{companyCode},#{manager},#{email},#{mobile},#{qq},#{level},#{model},#{stockModel},#{maxPosNum},#{tel},#{longitude},#{latitude},#{address},#{provinceId},#{cityId},#{countyId},#{openTime},#{closeTime},#{status},0,#{payType},#{deliverType},#{deliverRange},#{postageConfig},#{freePostageOrderFee},#{postageFee},#{instantService},#{orderEndTime},#{nextdayService},#{customerService},now(),#{operatorId},#{operatorName},#{remark})
+    </insert>
+
+</mapper>

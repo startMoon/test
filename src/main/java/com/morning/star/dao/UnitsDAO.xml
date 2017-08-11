@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morning.star.dao.UnitsDAO">
+    <resultMap id="TohomeMap" type="com.morning.star.bean.RetailUnits">
+        <id column="unitsId" property="id" jdbcType="BIGINT"/>
+        <result column="unitsName" property="unitsName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="TohomeMap">
+        SELECT * FROM tohome.th_units
+    </select>
+
+    <select id="getInfo" resultMap="TohomeMap">
+        SELECT * FROM tohome.th_units WHERE unitsId = ${id}
+    </select>
+
+    <insert id="addUnits" useGeneratedKeys="true" keyProperty="id">
+        use `retail_base_info`;
+        insert into retail_units(id,units_name,company_code,create_time,modify_time,operator_id,operator_name)
+        values (#{id},#{unitsName},#{companyCode},now(),now(),#{operatorId},#{operatorName})
+    </insert>
+
+</mapper>

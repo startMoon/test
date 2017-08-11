@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morning.star.dao.GoodsImgDAO">
+
+    <resultMap id="TohomeMap" type="com.morning.star.bean.RetailGoodsImg">
+        <result property="goodsCode" column="itemCode"/>
+        <result property="imgUri" column="imgUri"/>
+        <result property="imgType" column="type"/>
+        <result property="defaultImg" column="isDefault"/>
+        <result property="sort" column="index"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="TohomeMap">
+        SELECT * FROM tohome.th_item_img
+    </select>
+
+    <insert id="addGoodsImg" parameterType="com.morning.star.bean.RetailGoodsImg">
+        use `retail_base_info`;
+        insert into retail_goods_img(
+        goods_code,img_uri,img_type,is_default,sort,company_code
+        )
+        values (
+        #{goodsCode},#{imgUri},#{imgType},#{defaultImg},#{sort},#{companyCode}
+        )
+    </insert>
+
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morning.star.dao.StockDAO">
+    <resultMap id="TohomeMap" type="com.morning.star.bean.RetailStock" >
+        <result column="storeId" property="warehouseCode"/>
+        <result column="itemCode" property="goodsCode"/>
+        <result column="stockCount" property="doneInStockNum"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="TohomeMap">
+        use `tohome`;
+        SELECT * FROM tohome.th_store_item
+    </select>
+
+    <insert id="addStock" parameterType="com.morning.star.bean.RetailStock">
+        use `retail_stock`;
+        insert into
+        retail_stock
+        (company_code,warehouse_code,goods_code,goods_name,upc_code,done_in_stock_num,used_stock_num,wait_in_stock_num,pre_stock_num,wait_out_stock_num,done_out_stock_num,units,goods_type,spec_num,spec_units,delete_flag,create_time,operator_id,operator_name,remark)
+        values
+        (#{companyCode},#{warehouseCode},#{goodsCode},#{goodsName},#{upcCode},#{doneInStockNum},#{usedStockNum},0,0,0,0,#{units},#{goodsType},#{specNum},#{specUnits},0,now(),#{operatorId},#{operatorName},#{remark})
+    </insert>
+
+</mapper>
